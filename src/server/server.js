@@ -43,6 +43,19 @@ app.post('/api/user/login', (req, res) => {
              
         })
     });
+});
+
+app.get('/api/user/getAll', (req, res) => {
+    mongoose.connect(url, { useNewUrlParser: true }, function(err){
+        if(err) throw err;
+        User.find(function(err, users) {
+            if(err) throw err;
+            return res.status(200).json({ 
+                status: 'success',
+                data: users
+            })
+        })
+    });
 })
 
 app.listen(3000, () => console.log('blog server running on port 3000!'));

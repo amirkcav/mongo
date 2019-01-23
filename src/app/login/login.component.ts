@@ -2,41 +2,28 @@ import { Component } from '@angular/core';
 import { LoginService } from './login.service';
 import { User } from '../models/user.model';
 import { Router } from '@angular/router';
+import { AppService } from '../app.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
-  providers: [ LoginService ]
+  providers: [ AppService ]
 })
 export class LoginComponent {
 
   public user: User;
 
-  constructor(private loginService: LoginService, private router: Router) {
+  constructor(private appService: AppService, private router: Router) {
     this.user = new User();
   }
 
   validateLogin() {
-
-    // this.loginService.get().subscribe((res) => {
-    //   console.log('ASDF');
-    //   console.log(res);
-    // }, (err) => {
-    //   console.log('RERERE' + err);
-    // });
-
-    // this.loginService.get().toPromise().then((res) => {
-    //   console.log('promise 1');
-    // }, (err) => {
-    //   console.log('promise 2 ' + err);
-    // });
-
     if (this.user.username && this.user.password) {
-      this.loginService.validateLogin(this.user).subscribe(result => {
+      this.appService.validateLogin(this.user).subscribe(result => {
         console.log('result is ', result);
         if (result['status'] === 'success') {
-          this.router.navigate(['/home']);
+          this.router.navigate(['/users']);
         } else {
           alert('Wrong username password');
         }
