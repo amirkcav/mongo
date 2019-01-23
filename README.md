@@ -6,6 +6,11 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
+## Node JS server
+Open folder app/src/server and run `node server.js` to run node server.
+Run `node --inspect server.js` to use chrome dev tools (in `chrome:\\inspect`).
+Run `mongo localhost:27017/blogDb` in terminal to connect to the MongoDB database ("blogDb" is the db name defined in the url in server.js. 27017 is the default port).
+
 ## Code scaffolding
 
 Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
