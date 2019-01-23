@@ -30,7 +30,7 @@ app.post('/api/user/login', (req, res) => {
         }, function(err, user){
             if(err) throw err;
             if(user.length === 1){  
-                return res.status(200).json({
+                return res.status(200).json({ 
                     status: 'success',
                     data: user
                 })
