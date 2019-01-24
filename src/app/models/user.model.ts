@@ -1,10 +1,17 @@
 export class User {
-  constructor() {
+  constructor(username = '') {
     this.username = '';
     this.password = '';
-    this.role = '';
+    this.name = '';
+    this.role = Roles.regularUser;
   }
-  public username;
-  public password;
-  public role;
+  public name: string;
+  public username: string;
+  public password: string;
+  public role: Roles;
+}
+
+export enum Roles {
+  regularUser,
+  admin
 }

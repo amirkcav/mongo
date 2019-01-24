@@ -1,20 +1,24 @@
-<p>
-  users works!
-</p>
+<h2 class="page-title">Users</h2>
 
-<table *ngIf="users">
-  <thead>
-    <tr>
-      <th *ngFor="let header of headers">
-        {{ header }}
-      </th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor=" let user of users">
-      <td *ngFor="let header of headers">
-        {{ user[header] }}
-      </td>
-    </tr>
-  </tbody>
-</table>
+<button id="create-user-button" mat-button color="primary" (click)="createUser()">Create User</button>
+
+<div class="table-wrapper">
+  <mat-table #table mat-table [dataSource]="users">
+
+    <ng-container *ngFor="let header of headers" [matColumnDef]="header">
+      <mat-header-cell *matHeaderCellDef>{{header}}</mat-header-cell>
+      <mat-cell *matCellDef="let user">
+        <ng-container *ngIf="header !== 'actions'">
+          {{user[header]}}
+        </ng-container>
+        <ng-container *ngIf="header === 'actions'">
+          <button (click)="delete(user)">Delete</button>
+        </ng-container>
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="headers"></mat-header-row>
+    <mat-row *matRowDef="let user; columns: headers" [ngClass]="{ 'deleted': user.deleted }"></mat-row>
+
+  </mat-table>
+</div>

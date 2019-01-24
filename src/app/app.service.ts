@@ -19,4 +19,16 @@ export class AppService {
     });
   }
 
+  saveUser(user: User) {
+    return this.http.post(environment.serverPath + '/api/user/saveUser', {
+      user: user
+    });
+  }
+
+  deleteUser(user: User) {
+    return this.http.post(environment.serverPath + '/api/user/deleteUser', {
+      user: user
+    });
+  }
+
 }

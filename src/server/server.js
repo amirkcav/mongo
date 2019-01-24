@@ -58,4 +58,39 @@ app.get('/api/user/getAll', (req, res) => {
     });
 })
 
+app.post('/api/user/saveUser', (req, res) => {
+    mongoose.connect(url, { useNewUrlParser: true }, function(err){
+        if(err) throw err;
+        User.create(req.body.user, (err, resp) => {
+            if (err) {
+                return res.status(500).json({ error: err });    
+            }
+            return res.status(200).json({ 
+                status: 'success',
+                data: resp
+            });
+        });
+    });
+});
+
+app.post('/api/user/deleteUser', (req, res) => {
+    mongoose.connect(url, { useNewUrlParser: true }, function(err){
+        if(err) { //throw err;
+            return res.status(500).json({ error: err });    
+        }
+        User.deleteOne({ username : req.body.user.username }, (err, resp) => {
+            if (err) {
+                return res.status(500).json({ error: err });    
+            }
+            return res.status(200).json({ 
+                status: 'success',
+                data: resp
+            });
+        })
+        .catch((err) => {
+            return res.status(500).json({ text: 'CATCH', error: err });    
+        });
+    });
+});
+
 app.listen(3000, () => console.log('blog server running on port 3000!'));
