@@ -25,6 +25,12 @@ export class AppService {
     });
   }
 
+  editUser(user: User) {
+    return this.http.post(environment.serverPath + '/api/user/editUser', {
+      user: user
+    });
+  }
+
   deleteUser(user: User) {
     return this.http.post(environment.serverPath + '/api/user/deleteUser', {
       user: user

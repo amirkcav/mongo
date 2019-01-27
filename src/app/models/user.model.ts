@@ -5,6 +5,7 @@ export class User {
     this.name = '';
     this.role = Roles.regularUser;
   }
+  public _id: any;
   public name: string;
   public username: string;
   public password: string;

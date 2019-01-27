@@ -24,8 +24,9 @@
   transform-origin: 0%;
   margin: -14px;
   min-height: 0;
-  /* padding: 0; */
-  /* opacity: 0; */
-  /* height: 0;
-  font-size: 0; */
+}
+
+mat-header-row.mat-header-row {
+  border-bottom-width: 2px;
+  border-bottom-color: rgba(0,0,0,.24);
 }

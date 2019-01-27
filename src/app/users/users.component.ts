@@ -1,8 +1,9 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
-import { AppService } from '../app.service';
-import { User } from '../models/user.model';
 import { MatDialog, MatDialogRef, MatTable } from '@angular/material';
+
 import { AddUserDialogComponent } from './add-user.dialog/add-user.dialog.component';
+import { User } from '../models/user.model';
+import { AppService } from '../app.service';
 
 @Component({
   selector: 'app-users',
@@ -39,7 +40,6 @@ export class UsersComponent implements OnInit {
   createUser(): void {
     this.createUserDialog = this.dialog.open(AddUserDialogComponent, {
       width: '400px',
-      // data: {  }
     });
     this.createUserDialog.componentInstance.userCreated.subscribe((newUser) => {
       this.createUserDialog.close();
@@ -49,11 +49,13 @@ export class UsersComponent implements OnInit {
   }
 
   delete(user: User) {
+    // console.log(`delete ${user.username} 1`);
     this.appService.deleteUser(user).toPromise().then((data) => {
+      console.log(`delete ${user.username} 2`);
       if (data['status'] === 'success') {
-        const i = this.users.indexOf(user);
         user['deleted'] = true;
         setTimeout(() => {
+          const i = this.users.indexOf(user);
           this.users.splice(i, 1);
           this.usersTable.renderRows();
         }, 700);
@@ -61,6 +63,27 @@ export class UsersComponent implements OnInit {
     })
     .catch((error) => {
       console.error(error);
+    });
+  }
+
+  edit(user: User) {
+    this.createUserDialog = this.dialog.open(AddUserDialogComponent, {
+      width: '400px',
+      data: { user: user /*, userId: user.id*/ }
+    });
+    this.createUserDialog.componentInstance.userCreated.subscribe((newUser) => {
+      this.createUserDialog.close();
+      // add new user
+      if (!user._id) {
+        this.users.push(newUser);
+      }
+      // update user
+      else {
+        const _user = this.users.filter((u) => u._id === user._id);
+        const i = this.users.indexOf(_user[0]);
+        this.users[i] = newUser;
+      }
+      this.usersTable.renderRows();
     });
   }
 

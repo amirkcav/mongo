@@ -67,7 +67,28 @@ app.post('/api/user/saveUser', (req, res) => {
             }
             return res.status(200).json({ 
                 status: 'success',
-                data: resp
+                user: resp
+            });
+        });
+    });
+});
+
+app.post('/api/user/editUser', (req, res) => {
+    mongoose.connect(url, { useNewUrlParser: true }, function(err){
+        if(err) throw err;
+        // User.findByIdAndUpdate(req.body.user._id, { 
+        User.findOneAndUpdate({ _id: req.body.user._id }, {             
+                name: req.body.user.name,
+                username: req.body.user.username,
+                password: req.body.user.password,
+                role: req.body.user.role,
+            }, (err, resp) => {
+            if (err) {
+                return res.status(500).json({ error: err });    
+            }
+            return res.status(200).json({ 
+                status: 'success',
+                // user: resp 
             });
         });
     });
@@ -92,5 +113,7 @@ app.post('/api/user/deleteUser', (req, res) => {
         });
     });
 });
+
+
 
 app.listen(3000, () => console.log('blog server running on port 3000!'));
