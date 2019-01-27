@@ -1,5 +1,5 @@
 import { Component, OnInit, Output, EventEmitter, Inject } from '@angular/core';
-import {/* FormsModule, ReactiveFormsModule,*/ FormGroup, FormControl, Validators } from '@angular/forms';
+import {/* FormsModule, ReactiveFormsModule,*/ FormGroup, FormControl, Validators, ValidatorFn } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material';
 
 import { User } from '../../models/user.model';
@@ -26,7 +26,7 @@ export class AddUserDialogComponent implements OnInit {
       'name': new FormControl(this.user.name),
       'username': new FormControl(this.user.username, [Validators.required]),
       'password': new FormControl(this.user.password, [Validators.required]),
-      'confirmPassword': new FormControl(this.user.password, [Validators.required]),
+      'confirmPassword': new FormControl(this.user.password, [Validators.required, this.confirmPasswordMatch]),
       'role': new FormControl(this.user.role, [Validators.required])
     }, { validators: [  ] });
   }
@@ -48,10 +48,15 @@ export class AddUserDialogComponent implements OnInit {
       if (!_user._id) {
         _user._id = data.user._id;
       }
-      this.userCreated.emit(_user /*data.user*/);
+      this.userCreated.emit(_user);
     })
     .catch((err) => {
       alert(err.error.error.errmsg);
     });
+  }
+
+  confirmPasswordMatch(input: FormControl) {
+    const password = input.parent ? input.parent.controls['password'].value : '';
+    return password === input.value ? null : { confirmPasswordNotMatch: true };
   }
 }

@@ -3,30 +3,33 @@
   <form [formGroup]="addUserForm" (ngSubmit)="createUser()" >
     <div class="form-group">
       <label>Name</label>
-      <input #rows id="rows" class="form-control" formControlName="name"/>
+      <input class="form-control" formControlName="name"/>
       <!-- <div *ngIf="addUserForm.controls.name.invalid && addUserForm.controls.name.touched" class="cross-validation-error-message alert alert-danger">
           Rows is required!
       </div> -->
     </div>
     <div class="form-group">
       <label>Username</label>
-      <input name="cols" class="form-control" formControlName="username"/>
+      <input class="form-control" formControlName="username"/>
       <div *ngIf="addUserForm.controls.username.invalid && addUserForm.controls.username.touched" class="cross-validation-error-message alert alert-danger">
           Username is required!
       </div>
     </div>
     <div class="form-group">
       <label>Password</label>
-      <input name="cols" class="form-control" formControlName="password"/>
+      <input type="password" class="form-control" formControlName="password"/>
       <div *ngIf="addUserForm.controls.password.invalid && addUserForm.controls.password.touched" class="cross-validation-error-message alert alert-danger">
           Password is required!
       </div>
     </div>
     <div class="form-group">
       <label>Confirm Password</label>
-      <input name="cols" class="form-control" formControlName="confirmPassword"/>
-      <div *ngIf="addUserForm.controls.confirmPassword.invalid && addUserForm.controls.confirmPassword.touched" class="cross-validation-error-message alert alert-danger">
+      <input type="password" class="form-control" formControlName="confirmPassword"/>
+      <div *ngIf="addUserForm.controls.confirmPassword.hasError('required') && addUserForm.controls.confirmPassword.invalid && addUserForm.controls.confirmPassword.touched" class="cross-validation-error-message alert alert-danger">
           Confirm Password is required!
+      </div>
+      <div *ngIf="addUserForm.controls.confirmPassword.hasError('confirmPasswordNotMatch') && addUserForm.controls.confirmPassword.invalid && addUserForm.controls.confirmPassword.touched" class="cross-validation-error-message alert alert-danger">
+          Passwords don't match!
       </div>
     </div>
     <div class="form-group">
