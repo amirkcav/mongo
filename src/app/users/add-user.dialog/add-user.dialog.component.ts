@@ -17,6 +17,7 @@ export class AddUserDialogComponent implements OnInit {
   addUserForm: FormGroup;
   user: User;
   confirmPassword: string;
+  hidePasswords = true;
 
   constructor(private appService: AppService, @Inject(MAT_DIALOG_DATA) public data: any) { }
 
