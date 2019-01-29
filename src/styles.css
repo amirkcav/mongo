@@ -30,6 +30,7 @@ select option {
   padding: 10px;
   text-align: center !important;
   border-bottom: 1px solid #666;
+  height: 43px;
 }
 
 #app-title > div {

@@ -13,12 +13,13 @@ import { HttpClientModule } from '@angular/common/http';
 import { UsersComponent } from './users/users.component';
 import { MatButtonModule, MatDialogModule, MatFormFieldModule, MatSelectModule, MatInputModule } from '@angular/material';
 import { AddUserDialogComponent } from './users/add-user.dialog/add-user.dialog.component';
+import { IsAdminGuard, LoginService, IsLoggedInGuard } from './login/login.service';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
-  { path: 'home', component: HomeComponent },
-  { path: 'users', component: UsersComponent }
+  { path: 'home', component: HomeComponent, canActivate: [IsLoggedInGuard] },
+  { path: 'users', component: UsersComponent, canActivate: [IsAdminGuard] }
 ];
 
 @NgModule({
@@ -43,7 +44,7 @@ const appRoutes: Routes = [
     MatSelectModule,
     MatInputModule
   ],
-  providers: [],
+  providers: [IsLoggedInGuard, IsAdminGuard, LoginService],
   bootstrap: [AppComponent],
   entryComponents: [AddUserDialogComponent]
 })

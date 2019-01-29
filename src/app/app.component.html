@@ -1,2 +1,13 @@
+<div id="app-title">
+    <div class="clearfix">
+      <a *ngIf="loginService.isLoggedIn" href="javascript:;" [routerLink]="['/login']" (click)="logout()" id="logout-button">
+        התנתק
+      </a>
+    </div>
+</div>
 
-<router-outlet></router-outlet>
+<div id="app-wrapper"> 
+
+  <router-outlet></router-outlet>
+
+</div>  
