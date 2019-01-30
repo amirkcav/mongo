@@ -1,0 +1,36 @@
+#navigation {
+  list-style: none;
+  padding-top: 10px; 
+  padding-bottom: 10px; 
+  padding-left: 0;
+}
+
+#navigation > li {
+  float: left;
+}
+
+#navigation > li > a {
+  padding: 10px; 
+  transition: 0.3s;
+  color: #336;
+}
+
+#navigation > li + li > a {
+  margin: 0 3px;
+}
+
+#navigation > li > a:hover {
+  text-decoration: none;
+  color: inherit;
+  text-shadow: #fff 0 0 8px;
+  background: rgba(255,255,255,0.1);
+}
+
+#navigation > li > a:focus {
+  text-decoration: none;
+}
+
+#navigation > li > a.active {
+  background: rgba(255,255,255,0.15);
+  font-weight: bold;
+}

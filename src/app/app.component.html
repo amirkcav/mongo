@@ -1,13 +1,24 @@
 <div id="app-title">
     <div class="clearfix">
-      <a *ngIf="loginService.isLoggedIn" href="javascript:;" [routerLink]="['/login']" (click)="logout()" id="logout-button">
-        התנתק
+      <a *ngIf="loginService.isLoggedIn()" href="javascript:;" routerLink="login" (click)="logout()" id="logout-button">
+        Logout
       </a>
+      <ul id="navigation">
+        <li *ngIf="loginService.isLoggedIn()">
+          <a routerLink="home" routerLinkActive="active">Home</a>          
+        </li>
+        <li *ngIf="loginService.isAdmin()">
+          <a routerLink="users" routerLinkActive="active">Users</a>          
+        </li>
+      </ul>
     </div>
 </div>
 
 <div id="app-wrapper"> 
 
   <router-outlet></router-outlet>
+
+  <!-- <p>Logged In: {{ loginService.isLoggedIn() }}</p>
+  <p>Admin: {{ loginService.isAdmin() }}</p> -->
 
 </div>  

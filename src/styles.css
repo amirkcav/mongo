@@ -27,7 +27,7 @@ select option {
 
 #app-title {
   background: lightsteelblue;
-  padding: 10px;
+  /* padding: 10px; */
   text-align: center !important;
   border-bottom: 1px solid #666;
   height: 43px;
@@ -41,8 +41,10 @@ select option {
 }
 
 #logout-button {
-  float: left;
+  float: right;
   color: #336;
+  padding-top: 10px; 
+  padding-bottom: 10px; 
 }
 
 .page-title {

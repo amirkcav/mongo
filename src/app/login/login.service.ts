@@ -7,8 +7,8 @@ import { CanActivate } from '@angular/router';
 @Injectable()
 export class LoginService {
 
-  isLoggedIn = false;
-  isAdmin = false;
+  // isLoggedIn = false;
+  // isAdmin = false;
 
   constructor(private http: HttpClient) { }
 
@@ -19,17 +19,29 @@ export class LoginService {
     })
     .map((res) => {  
       if (res['status'] === 'success') {
-        this.isLoggedIn = true;
+        // this.isLoggedIn = true;
         const role = res['data'][0].role;
-        this.isAdmin = role === 'admin';
+        // this.isAdmin = role === 'admin';
+        localStorage.setItem('mongoUser', JSON.stringify(res['data'][0]));
       }
       return res;
     });
   }
 
+  isLoggedIn(): boolean {
+    const user = localStorage.getItem('mongoUser');
+    return user !== null;
+  }
+
+  isAdmin() {
+    const user = localStorage.getItem('mongoUser');
+    return user !== null && JSON.parse(user)['role'] === 'admin';
+  }
+
   logout() {
-    this.isLoggedIn = false;
-    this.isAdmin = false;    
+    // this.isLoggedIn = false;
+    // this.isAdmin = false;  
+    localStorage.removeItem('mongoUser');  
   }
 
 }
@@ -39,7 +51,7 @@ export class IsLoggedInGuard implements CanActivate {
   constructor(private loginService: LoginService) { }
 
   canActivate() {
-    return this.loginService.isLoggedIn;
+    return this.loginService.isLoggedIn();
   }
 }
 
@@ -48,6 +60,6 @@ export class IsAdminGuard implements CanActivate {
   constructor(private loginService: LoginService) { }
   
   canActivate() {
-    return this.loginService.isAdmin;
+    return this.loginService.isAdmin();
   }
 }
