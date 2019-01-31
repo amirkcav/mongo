@@ -1,5 +1,6 @@
 export class User {
   constructor(username = '') {
+    this.image = '';
     this.username = '';
     this.password = '';
     this.name = '';
@@ -10,6 +11,7 @@ export class User {
   public username: string;
   public password: string;
   public role: Roles;
+  public image: any;
 }
 
 export enum Roles {

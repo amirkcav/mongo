@@ -28,7 +28,9 @@ export class AddUserDialogComponent implements OnInit {
       'username': new FormControl(this.user.username, [Validators.required]),
       'password': new FormControl(this.user.password, [Validators.required]),
       'confirmPassword': new FormControl(this.user.password, [Validators.required, this.confirmPasswordMatch]),
-      'role': new FormControl(this.user.role, [Validators.required])
+      'role': new FormControl(this.user.role, [Validators.required]),
+      'image': new FormControl(this.user.image),
+      'imagePath': new FormControl()
     }, { validators: [  ] });
   }
 
@@ -60,4 +62,22 @@ export class AddUserDialogComponent implements OnInit {
     const password = input.parent ? input.parent.controls['password'].value : '';
     return password === input.value ? null : { confirmPasswordNotMatch: true };
   }
+
+  onFileChange(event) {
+    const reader = new FileReader();
+    if (event.target.files && event.target.files.length > 0) {
+      const file = event.target.files[0];
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        this.addUserForm.get('image').setValue(reader.result);
+        // this.addUserForm.get('image').setValue({
+        //   filename: file.name,
+        //   filetype: file.type,
+        //   value: reader.result.split(',')[1],
+        //   valuePrefix: reader.result.split(',')[0]
+        // });
+      };
+    }
+  }
+
 }

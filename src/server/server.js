@@ -82,6 +82,7 @@ app.post('/api/user/editUser', (req, res) => {
                 username: req.body.user.username,
                 password: req.body.user.password,
                 role: req.body.user.role,
+                image: req.body.user.image,
             }, (err, resp) => {
             if (err) {
                 return res.status(500).json({ error: err });    

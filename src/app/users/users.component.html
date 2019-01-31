@@ -6,16 +6,35 @@
   <mat-table #table mat-table [dataSource]="users">
 
     <ng-container *ngFor="let header of headers" [matColumnDef]="header">
-      <mat-header-cell *matHeaderCellDef>{{header}}</mat-header-cell>
-      <mat-cell *matCellDef="let user">
-        <ng-container *ngIf="header !== 'actions'">
-          {{user[header]}}
+      <ng-container [ngSwitch]="header">
+        <ng-container *ngSwitchCase="'image'">
+          <mat-header-cell *matHeaderCellDef class="narrow-cell">
+          </mat-header-cell>  
         </ng-container>
-        <ng-container *ngIf="header === 'actions'">
-          <button (click)="delete(user)">Delete</button>
-          <button (click)="edit(user)">Edit</button>
+        <ng-container *ngSwitchDefault>
+            <mat-header-cell *matHeaderCellDef>
+            {{header}}
+          </mat-header-cell>
+        </ng-container>        
+      </ng-container>      
+      <ng-container [ngSwitch]="header">
+        <ng-container *ngSwitchCase="'actions'">
+          <mat-cell *matCellDef="let user">
+            <button (click)="delete(user)">Delete</button>
+            <button (click)="edit(user)">Edit</button>
+          </mat-cell>
         </ng-container>
-      </mat-cell>
+        <ng-container *ngSwitchCase="'image'">
+          <mat-cell *matCellDef="let user" class="narrow-cell">
+            <img *ngIf="user[header]" class="user-image" width="40" [src]="user[header]" />
+          </mat-cell>
+        </ng-container>
+        <ng-container *ngSwitchDefault>
+          <mat-cell *matCellDef="let user">
+            {{user[header]}}
+          </mat-cell>
+        </ng-container>
+      </ng-container>
     </ng-container>
 
     <mat-header-row *matHeaderRowDef="headers"></mat-header-row>

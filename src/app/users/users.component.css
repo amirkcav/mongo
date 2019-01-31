@@ -30,3 +30,7 @@ mat-header-row.mat-header-row {
   border-bottom-width: 2px;
   border-bottom-color: rgba(0,0,0,.24);
 }
+
+.mat-cell.narrow-cell {
+  flex: 0 0 60px;
+}

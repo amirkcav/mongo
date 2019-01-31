@@ -34,13 +34,6 @@
       <input id="hide-passwords" type="checkbox" [checked]="!hidePasswords" (change)="hidePasswords = !hidePasswords">
       <label for="hide-passwords">Show passwords</label>
     </div>
-    <!-- <mat-form-field [floatLabel]="false">
-      <label>Role</label>
-      <mat-select required disableRipple>
-        <mat-option value="regularUser">Regular User</mat-option>
-        <mat-option value="admin">Admin</mat-option>
-      </mat-select>
-    </mat-form-field> -->
     <div class="form-group">
       <label>Role</label>
       <select class="form-control" formControlName="role">
@@ -50,6 +43,11 @@
       <div *ngIf="addUserForm.controls.role.invalid && addUserForm.controls.role.touched" class="cross-validation-error-message alert alert-danger">
           Role is required!
       </div>
+    </div>
+    <div class="form-group">
+      <label>Image</label>
+      <input type="file" class="form-control" (change)="onFileChange($event)" formControlName="imagePath"/>
+      <img [src]="addUserForm.controls.image.value?.valuePrefix + ',' + addUserForm.controls.image.value?.value" />
     </div>
     <br/>    
     <button class="btn btn-primary" [disabled]="addUserForm.invalid">Start Game</button>
