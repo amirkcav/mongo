@@ -47,7 +47,7 @@
     <div class="form-group">
       <label>Image</label>
       <input type="file" class="form-control" (change)="onFileChange($event)" formControlName="imagePath"/>
-      <img [src]="addUserForm.controls.image.value?.valuePrefix + ',' + addUserForm.controls.image.value?.value" />
+      <img *ngIf="addUserForm.controls.image.value" [src]="addUserForm.controls.image.value" />
     </div>
     <br/>    
     <button class="btn btn-primary" [disabled]="addUserForm.invalid">Start Game</button>

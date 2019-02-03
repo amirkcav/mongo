@@ -1,6 +1,6 @@
 <h2 class="page-title">Users</h2>
 
-<button id="create-user-button" mat-button color="primary" (click)="createUser()">Create User</button>
+<button id="create-user-button" mat-button mat-stroked-button color="primary" (click)="createUser()">Create User</button>
 
 <div class="table-wrapper">
   <mat-table #table mat-table [dataSource]="users">
@@ -20,8 +20,8 @@
       <ng-container [ngSwitch]="header">
         <ng-container *ngSwitchCase="'actions'">
           <mat-cell *matCellDef="let user">
-            <button (click)="delete(user)">Delete</button>
-            <button (click)="edit(user)">Edit</button>
+            <button mat-button (click)="delete(user)">Delete</button>
+            <button mat-button (click)="edit(user)">Edit</button>
           </mat-cell>
         </ng-container>
         <ng-container *ngSwitchCase="'image'">

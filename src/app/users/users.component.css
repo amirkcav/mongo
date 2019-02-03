@@ -16,7 +16,11 @@
 }
 
 .mat-row {
-  transition: 0.7s;
+  transition: margin 0.7s, transform 0.7s, background-color 0.3s;
+}
+
+.mat-row:hover {
+  background: #f6faff;
 }
 
 .mat-row.deleted {
@@ -31,6 +35,14 @@ mat-header-row.mat-header-row {
   border-bottom-color: rgba(0,0,0,.24);
 }
 
-.mat-cell.narrow-cell {
+.mat-header-cell.narrow-cell, .mat-cell.narrow-cell {
   flex: 0 0 60px;
+}
+
+::ng-deep .mat-column-actions button {
+  min-width: unset;
+}
+
+::ng-deep button.mat-button:hover .mat-button-focus-overlay, button.mat-stroked-button:hover .mat-button-focus-overlay {
+  opacity: 0.4;
 }
