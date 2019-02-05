@@ -6,8 +6,9 @@ const mongoose = require('mongoose');
 const url = 'mongodb://localhost/blogDb';
 
 const User = require('./user');
+const Item = require('./item');
 
-app.use(bodyParser.json())
+app.use(bodyParser.json({limit: '2mb'}))
 app.use(bodyParser.urlencoded({ extended : false}))
 
 app.use(function (req, res, next) {
@@ -20,6 +21,8 @@ app.use(function (req, res, next) {
 
 // from https://stackoverflow.com/questions/51916630/mongodb-mongoose-collection-find-options-deprecation-warning#answer-51918795
 mongoose.set('useCreateIndex', true);
+
+//#region login
 
 app.post('/api/user/login', (req, res) => {
     mongoose.connect(url, { useNewUrlParser: true }, function(err){
@@ -45,7 +48,11 @@ app.post('/api/user/login', (req, res) => {
     });
 });
 
-app.get('/api/user/getAll', (req, res) => {
+//#endregion
+
+// #region users
+
+app.get('/api/user/getAllUsers', (req, res) => {
     mongoose.connect(url, { useNewUrlParser: true }, function(err){
         if(err) throw err;
         User.find(function(err, users) {
@@ -56,7 +63,7 @@ app.get('/api/user/getAll', (req, res) => {
             })
         })
     });
-})
+});
 
 app.post('/api/user/saveUser', (req, res) => {
     mongoose.connect(url, { useNewUrlParser: true }, function(err){
@@ -115,6 +122,76 @@ app.post('/api/user/deleteUser', (req, res) => {
     });
 });
 
+// #endregion
 
+// #region items
+
+app.get('/api/item/getAllItems', (req, res) => {
+    mongoose.connect(url, { useNewUrlParser: true }, function(err){
+        if(err) throw err;
+        Item.find(function(err, users) {
+            if(err) throw err;
+            return res.status(200).json({ 
+                status: 'success',
+                data: users
+            })
+        })
+    });
+})
+
+app.post('/api/item/saveItem', (req, res) => {
+    mongoose.connect(url, { useNewUrlParser: true }, function(err){
+        if(err) throw err;
+        Item.create(req.body.item, (err, resp) => {
+            if (err) {
+                return res.status(500).json({ error: err });    
+            }
+            return res.status(200).json({ 
+                status: 'success',
+                item: resp
+            });
+        });
+    });
+});
+
+app.post('/api/item/deleteItem', (req, res) => {
+    mongoose.connect(url, { useNewUrlParser: true }, function(err) {
+        if(err) throw err;
+        Item.deleteOne({ name: req.body.item.name }, (err, resp) => {
+            if (err) {
+                return res.status(500).json({ error: err });    
+            }
+            return res.status(200).json({ 
+                status: 'success',
+                data: resp
+            });
+        })
+        .catch((err) => {
+            return res.status(500).json({ text: 'CATCH', error: err });    
+        });      
+    });
+});
+
+app.post('/api/item/editItem', (req, res) => {
+    mongoose.connect(url, { useNewUrlParser: true }, function(err) {
+        if(err) throw err;
+        Item.findOneAndUpdate({ '_id': req.body.item._id }, {
+            name: req.body.item.name,
+            description: req.body.item.description,
+            price: req.body.item.price,
+            image: req.body.item.image,
+        }, (err, resp) => {
+            if (err) {
+                return res.status(500).json({ error: err });    
+            }
+            return res.status(200).json({ 
+                status: 'success',
+                // user: resp 
+            })
+        });
+    });
+});
+
+// #endregion
 
 app.listen(3000, () => console.log('blog server running on port 3000!'));

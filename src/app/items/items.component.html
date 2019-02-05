@@ -1,0 +1,44 @@
+<h2 class="page-title">Items</h2>
+
+<button id="create-item-button" mat-button mat-stroked-button color="primary" (click)="createItem()">Create item</button>
+
+<div class="table-wrapper">
+  <mat-table #table mat-table [dataSource]="items">
+
+    <ng-container *ngFor="let header of headers" [matColumnDef]="header">
+      <ng-container [ngSwitch]="header">
+        <ng-container *ngSwitchCase="'image'">
+          <mat-header-cell *matHeaderCellDef>
+          </mat-header-cell>  
+        </ng-container>
+        <ng-container *ngSwitchDefault>
+          <mat-header-cell *matHeaderCellDef>
+            {{header}}
+          </mat-header-cell>
+        </ng-container>        
+      </ng-container>      
+      <ng-container [ngSwitch]="header">
+        <ng-container *ngSwitchCase="'actions'">
+          <mat-cell *matCellDef="let item">
+            <button mat-button (click)="delete(item)">Delete</button>
+            <button mat-button (click)="edit(item)">Edit</button>
+          </mat-cell>
+        </ng-container>
+        <ng-container *ngSwitchCase="'image'">
+          <mat-cell *matCellDef="let item">
+            <img *ngIf="item[header]" class="item-image" width="40" [src]="item[header]" />
+          </mat-cell>
+        </ng-container>
+        <ng-container *ngSwitchDefault>
+          <mat-cell *matCellDef="let item">
+            {{item[header]}}
+          </mat-cell>
+        </ng-container>
+      </ng-container>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="headers"></mat-header-row>
+    <mat-row *matRowDef="let item; columns: headers" [ngClass]="{ 'deleted': item.deleted }"></mat-row>
+
+  </mat-table>
+</div>

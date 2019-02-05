@@ -31,9 +31,9 @@ mat-header-row.mat-header-row {
   border-bottom-color: rgba(0,0,0,.24);
 }
 
-.mat-header-cell.narrow-cell, .mat-cell.narrow-cell {
+/* .mat-header-cell.narrow-cell, .mat-cell.narrow-cell {
   flex: 0 0 60px;
-}
+} */
 
 ::ng-deep .mat-column-actions button {
   min-width: unset;
@@ -45,7 +45,19 @@ mat-header-row.mat-header-row {
 
 /*#endregion*/
 
-#create-user-button {
+#create-item-button {
   float: right;
   margin-top: 20px;
 }
+
+.mat-column-image {
+  flex: 0 0 80px;
+}
+
+.mat-column-actions {
+  flex: 0 0 160px;
+}
+
+/* .mat-column-description {
+  flex: 0 0 30%;
+} */

@@ -2,7 +2,7 @@ import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogRef, MatTable } from '@angular/material';
 
 import { AddUserDialogComponent } from './add-user.dialog/add-user.dialog.component';
-import { User } from '../models/user.model';
+import { User, Roles } from '../models/user.model';
 import { AppService } from '../app.service';
 
 @Component({
@@ -18,11 +18,12 @@ export class UsersComponent implements OnInit {
   headers: string[];
   users: User[];
   createUserDialog: MatDialogRef<any>;
+  rolesEnum: typeof Roles = Roles;
 
   constructor(private appService: AppService, public dialog: MatDialog) { }
 
   ngOnInit() {
-    this.appService.getAll().toPromise().then((data) => {
+    this.appService.getAllUsers().toPromise().then((data) => {
       if (data['status'] !== 'success') {
         alert(data['message']);
       }

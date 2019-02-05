@@ -15,12 +15,15 @@ import { LoginComponent } from './login/login.component';
 import { UsersComponent } from './users/users.component';
 import { AddUserDialogComponent } from './users/add-user.dialog/add-user.dialog.component';
 import { IsAdminGuard, LoginService, IsLoggedInGuard } from './login/login.service';
+import { ItemsComponent } from './items/items.component';
+import { AddItemDialogComponent } from './items/add-item.dialog/add-item.dialog.component';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'home', component: HomeComponent, canActivate: [IsLoggedInGuard] },
-  { path: 'users', component: UsersComponent, canActivate: [IsAdminGuard] }
+  { path: 'users', component: UsersComponent, canActivate: [IsAdminGuard] },
+  { path: 'items', component: ItemsComponent, canActivate: [IsLoggedInGuard] }
 ];
 
 @NgModule({
@@ -29,7 +32,9 @@ const appRoutes: Routes = [
     HomeComponent,
     LoginComponent,
     UsersComponent,
-    AddUserDialogComponent
+    AddUserDialogComponent,
+    ItemsComponent,
+    AddItemDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -48,6 +53,6 @@ const appRoutes: Routes = [
   ],
   providers: [IsLoggedInGuard, IsAdminGuard, LoginService],
   bootstrap: [AppComponent],
-  entryComponents: [AddUserDialogComponent]
+  entryComponents: [AddUserDialogComponent, AddItemDialogComponent]
 })
 export class AppModule { }

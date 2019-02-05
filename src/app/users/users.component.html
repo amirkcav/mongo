@@ -29,6 +29,11 @@
             <img *ngIf="user[header]" class="user-image" width="40" [src]="user[header]" />
           </mat-cell>
         </ng-container>
+        <ng-container *ngSwitchCase="'role'">
+            <mat-cell *matCellDef="let user">
+              {{rolesEnum[user[header]]}}
+            </mat-cell>
+          </ng-container>
         <ng-container *ngSwitchDefault>
           <mat-cell *matCellDef="let user">
             {{user[header]}}

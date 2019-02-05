@@ -37,8 +37,8 @@
     <div class="form-group">
       <label>Role</label>
       <select class="form-control" formControlName="role">
-        <option>Regular User</option>
-        <option>Admin</option>
+        <option value="0">Regular User</option>
+        <option value="1">Admin</option>
       </select>
       <div *ngIf="addUserForm.controls.role.invalid && addUserForm.controls.role.touched" class="cross-validation-error-message alert alert-danger">
           Role is required!
@@ -47,7 +47,7 @@
     <div class="form-group">
       <label>Image</label>
       <input type="file" class="form-control" (change)="onFileChange($event)" formControlName="imagePath"/>
-      <img *ngIf="addUserForm.controls.image.value" [src]="addUserForm.controls.image.value" />
+      <img *ngIf="addUserForm.controls.image.value" height="50" [src]="addUserForm.controls.image.value" />
     </div>
     <br/>    
     <button class="btn btn-primary" [disabled]="addUserForm.invalid">Start Game</button>
