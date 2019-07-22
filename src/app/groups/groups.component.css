@@ -1,0 +1,63 @@
+/*#region table*/
+.table-wrapper {
+  box-shadow: 0px 2px 10px 0px rgba(0,0,0,.3);
+}
+
+.table-wrapper .mat-header-cell {
+  font-size: 1.8rem;
+}
+
+.table-wrapper .mat-cell {
+  font-size: 1.6rem;
+}
+
+.mat-row {
+  transition: all 0.7s, background-color 0.3s;
+}
+
+.mat-row:hover {
+  background: #f6faff;
+}
+
+.mat-row.deleted {
+  transform: scaleY(0);
+  transform-origin: 0%;
+  min-height: 0;
+  max-height: 0;
+}
+
+mat-header-row.mat-header-row {
+  border-bottom-width: 2px;
+  border-bottom-color: rgba(0,0,0,.24);
+}
+
+/* .mat-header-cell.narrow-cell, .mat-cell.narrow-cell {
+  flex: 0 0 60px;
+} */
+
+::ng-deep .mat-column-actions button {
+  min-width: unset;
+}
+
+::ng-deep button.mat-button:hover .mat-button-focus-overlay, button.mat-stroked-button:hover .mat-button-focus-overlay {
+  opacity: 0.4;
+}
+
+/*#endregion*/
+
+#create-group-button {
+  float: right;
+  margin-top: 20px;
+}
+
+.mat-column-image {
+  flex: 0 0 80px;
+}
+
+.mat-column-actions {
+  flex: 0 0 160px;
+}
+
+/* .mat-column-description {
+  flex: 0 0 30%;
+} */

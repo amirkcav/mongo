@@ -7,6 +7,7 @@ const url = 'mongodb://localhost/blogDb';
 
 const User = require('./user');
 const Item = require('./item');
+const Group = require('./group');
 
 app.use(bodyParser.json({limit: '2mb'}))
 app.use(bodyParser.urlencoded({ extended : false}))
@@ -129,13 +130,37 @@ app.post('/api/user/deleteUser', (req, res) => {
 app.get('/api/item/getAllItems', (req, res) => {
     mongoose.connect(url, { useNewUrlParser: true }, function(err){
         if(err) throw err;
-        Item.find(function(err, users) {
+
+        Item.find(function(err, items) {
             if(err) throw err;
-            return res.status(200).json({ 
-                status: 'success',
-                data: users
-            })
-        })
+            Group.find(function (er, groups) {
+                for (let i = 0; i < items.length; i++) {
+                    const item = items[i];
+                    item.gruop = groups.filter((g) => g.id === item.groupId)[0];
+                }
+                return res.status(200).json({ 
+                    status: 'success',
+                    data: items
+                });
+            });
+            // return res.status(200).json({ 
+            //     status: 'success',
+            //     data: items
+            // });
+        });
+        // Item.find().forEach(
+        //     function (_item) {
+        //         _item.group = db.myGroup.findOne( { "_id": { $in: _item.groupId }  } );
+        //         db.fullItems.insert(_item);
+        //     }
+        // );
+        // db.fullItems.find(function(err, items) {
+        //     if(err) throw err;
+        //     return res.status(200).json({ 
+        //         status: 'success',
+        //         data: items
+        //     });
+        // });
     });
 })
 
@@ -180,6 +205,78 @@ app.post('/api/item/editItem', (req, res) => {
             description: req.body.item.description,
             price: req.body.item.price,
             image: req.body.item.image,
+            groupId: req.body.item.groupId,
+            group: Group.findOne({ '_id': req.body.item.groupId }) 
+        }, (err, resp) => {
+            if (err) {
+                return res.status(500).json({ error: err });    
+            }
+            return res.status(200).json({ 
+                status: 'success',
+                // user: resp 
+            })
+        });
+    });
+});
+
+// #endregion
+
+// #region groups
+
+app.get('/api/group/getAllGroups', (req, res) => {
+    mongoose.connect(url, { useNewUrlParser: true }, function(err){
+        if(err) throw err;
+        Group.find(function(err, groups) {
+            if(err) throw err;
+            return res.status(200).json({ 
+                status: 'success',
+                data: groups
+            })
+        })
+    });
+})
+
+app.post('/api/group/saveGroup', (req, res) => {
+    mongoose.connect(url, { useNewUrlParser: true }, function(err){
+        if(err) throw err;
+        Group.create(req.body.group, (err, resp) => {
+            if (err) {
+                return res.status(500).json({ error: err });    
+            }
+            return res.status(200).json({ 
+                status: 'success',
+                group: resp
+            });
+        });
+    });
+});
+
+app.post('/api/group/deleteGroup', (req, res) => {
+    mongoose.connect(url, { useNewUrlParser: true }, function(err) {
+        if(err) throw err;
+        Group.deleteOne({ name: req.body.group.name }, (err, resp) => {
+            if (err) {
+                return res.status(500).json({ error: err });    
+            }
+            return res.status(200).json({ 
+                status: 'success',
+                data: resp
+            });
+        })
+        .catch((err) => {
+            return res.status(500).json({ text: 'CATCH', error: err });    
+        });      
+    });
+});
+
+app.post('/api/group/editGroup', (req, res) => {
+    mongoose.connect(url, { useNewUrlParser: true }, function(err) {
+        if(err) throw err;
+        Group.findOneAndUpdate({ '_id': req.body.group._id }, {
+            name: req.body.group.name,
+            description: req.body.group.description,
+            // price: req.body.group.price,
+            image: req.body.group.image,
         }, (err, resp) => {
             if (err) {
                 return res.status(500).json({ error: err });    

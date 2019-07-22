@@ -4,6 +4,7 @@ import { MAT_DIALOG_DATA } from '@angular/material';
 
 import { AppService } from '../../app.service';
 import { Item } from '../../models/item.model';
+import { Group } from '../../models/group.model';
 
 @Component({
   selector: 'app-add-item.dialog',
@@ -18,6 +19,7 @@ export class AddItemDialogComponent implements OnInit {
   item: Item;
   confirmPassword: string;
   hidePasswords = true;
+  allGroups: Group[];
 
   constructor(private appService: AppService, @Inject(MAT_DIALOG_DATA) public data: any) { }
 
@@ -28,8 +30,12 @@ export class AddItemDialogComponent implements OnInit {
       'description': new FormControl(this.item.description),
       'price': new FormControl(this.item.price, [Validators.required]),
       'image': new FormControl(this.item.image),
-      'imagePath': new FormControl()
+      'imagePath': new FormControl(),
+      'groupId': new FormControl(this.item.groupId)
     }, { validators: [  ] });
+    this.appService.getAllGroups().toPromise().then((resp) => {
+      this.allGroups = resp['data'];
+    });
   }
 
   createItem() {

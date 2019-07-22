@@ -13,6 +13,9 @@
         <li *ngIf="loginService.isLoggedIn()">
           <a routerLink="items" routerLinkActive="active">Items</a>          
         </li>
+        <li *ngIf="loginService.isLoggedIn()">
+          <a routerLink="groups" routerLinkActive="active">Groups</a>          
+        </li>
       </ul>
     </div>
 </div>

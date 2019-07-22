@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { User } from '../models/user.model';
+import { User, Roles } from '../models/user.model';
 import { environment } from '../../environments/environment';
 import { CanActivate } from '@angular/router';
 
@@ -35,7 +35,7 @@ export class LoginService {
 
   isAdmin() {
     const user = localStorage.getItem('mongoUser');
-    return user !== null && JSON.parse(user)['role'] === 'admin';
+    return user !== null && JSON.parse(user)['role'] === Roles.admin.toString();
   }
 
   logout() {

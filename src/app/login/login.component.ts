@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 // import { LoginService } from './login.service';
-import { User } from '../models/user.model';
+import { User, Roles } from '../models/user.model';
 import { Router } from '@angular/router';
 import { AppService } from '../app.service';
 import { LoginService } from './login.service';
@@ -24,7 +24,7 @@ export class LoginComponent {
       this.loginService.validateLogin(this.user).subscribe(result => {
         console.log('result is ', result);
         if (result['status'] === 'success') {
-          if (result['data'][0].role === 'admin') {
+          if (result['data'][0].role === Roles.admin.toString()) {
             this.router.navigate(['/users']);
           }
           else {

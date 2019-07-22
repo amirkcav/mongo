@@ -6,10 +6,11 @@ import 'rxjs/Rx';
 
 import { User } from './models/user.model';
 import { Item } from './models/item.model';
+import { Group } from './models/group.model';
 
 @Injectable()
 export class AppService {
-
+  
   constructor(private http: HttpClient) { }
 
   //#region users
@@ -66,6 +67,31 @@ export class AppService {
   deleteItem(item: Item) {
     return this.http.post(environment.serverPath + '/api/item/deleteItem', {
       item: item
+    });
+  }
+
+  //#endregion
+
+  //#region groups
+  getAllGroups() {
+    return this.http.get(environment.serverPath + '/api/group/getAllGroups');
+  }
+
+  saveGroup(group: Group) {
+    return this.http.post(environment.serverPath + '/api/group/saveGroup', {
+      group: group
+    });
+  }
+
+  editGroup(group: Group) {
+    return this.http.post(environment.serverPath + '/api/group/editGroup', {
+      group: group
+    });
+  }
+
+  deleteGroup(group: Group) {
+    return this.http.post(environment.serverPath + '/api/group/deleteGroup', {
+      group: group
     });
   }
 

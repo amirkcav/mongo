@@ -1,5 +1,5 @@
 <div *ngIf="addItemForm">
-  <h2 mat-dialog-title>Create User</h2>
+  <h2 mat-dialog-title>Create Item</h2>
   <form [formGroup]="addItemForm" (ngSubmit)="createItem()" >
     <div class="form-group">
       <label>Name</label>
@@ -18,6 +18,12 @@
       <div *ngIf="addItemForm.controls.price.invalid && addItemForm.controls.price.touched" class="cross-validation-error-message alert alert-danger">
           Price is required!
       </div>
+    </div>  
+    <div class="form-group">
+      <label>Group</label>
+      <select class="form-control" formControlName="groupId">
+        <option *ngFor="let group of allGroups" [value]="group._id">{{group.name}}</option>
+      </select>
     </div>    
     <div class="form-group">
       <label>Image</label>
